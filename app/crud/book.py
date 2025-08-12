@@ -12,3 +12,6 @@ def create_book(db: Session, book: BookCreate):
     db.commit()
     db.refresh(db_book)
     return db_book
+
+def get_books_by_format(db: Session, format: str):
+    return db.query(Book).filter(Book.format == format).all()

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from app.enums.book_format import BookFormat
 
 
 class BookBase(BaseModel):
@@ -6,6 +7,7 @@ class BookBase(BaseModel):
     author: str
     price: float
     stock: int
+    format: BookFormat
 
 
 class BookCreate(BookBase):

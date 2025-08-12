@@ -2,6 +2,8 @@ import argparse
 import httpx
 import json
 
+from app.enums.book_format import BookFormat
+
 
 API_URL = 'http://127.0.0.1:8000/books/'
 
@@ -10,7 +12,8 @@ def add_book(args):
         'title': args.title,
         'author': args.author,
         'price': args.price,
-        'stock': args.stock
+        'stock': args.stock,
+        'format': args.format
     }
 
     response = httpx.post(API_URL, json=payload)
@@ -42,6 +45,13 @@ def main():
     add_parser.add_argument('--author', required=True)
     add_parser.add_argument('--price', type=float, required=True)
     add_parser.add_argument('--stock', type=int, default=0)
+    add_parser.add_argument(
+        '--format',
+        type=str,
+        choices=[f.value for f in BookFormat],
+        required=True,
+        help='Book format (paperback, hardcover, ebook)' 
+        )
     add_parser.set_defaults(func=add_book)
 
     # List command

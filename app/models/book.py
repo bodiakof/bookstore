@@ -10,3 +10,4 @@ class Book(Base):
     author = Column(String, nullable=False)
     price = Column(Float, nullable=False)
     stock = Column(Integer, default=0)
+    format = Column(String, nullable=False, default='paperback')
