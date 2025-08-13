@@ -3,6 +3,8 @@ import httpx
 import json
 
 from app.enums.book_format import BookFormat
+from app.enums.category import Category
+from app.enums.genre import Genre
 
 
 API_URL = 'http://127.0.0.1:8000/books/'
@@ -52,6 +54,18 @@ def main():
         required=True,
         help='Book format (paperback, hardcover, ebook)' 
         )
+    add_parser.add_argument(
+        '--category',
+        type=Category,
+        choices=list(Category),
+        required=True
+    )
+    add_parser.add_argument(
+        '--genre',
+        type=Genre,
+        choices=list(Genre),
+        required=True
+    )
     add_parser.set_defaults(func=add_book)
 
     # List command
