@@ -1,8 +1,8 @@
-"""create book table
+"""Initial schema
 
-Revision ID: 4b5f94fcaf38
+Revision ID: 4c56ac6ade89
 Revises: 
-Create Date: 2025-08-06 13:08:17.584977
+Create Date: 2025-08-13 17:31:51.009541
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '4b5f94fcaf38'
+revision: str = '4c56ac6ade89'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -27,6 +27,9 @@ def upgrade() -> None:
     sa.Column('author', sa.String(), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.Column('stock', sa.Integer(), nullable=True),
+    sa.Column('format', sa.Enum('PAPERBACK', 'HARDCOVER', 'EBOOK', name='book_format_enum'), nullable=False),
+    sa.Column('category', sa.Enum('FICTION', 'NONFICTION', name='category_enum'), nullable=False),
+    sa.Column('genre', sa.Enum('FANTASY', 'SCI_FI', 'HISTORY', 'BIOGRAPHY', name='genre_enum'), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_books_id'), 'books', ['id'], unique=False)
