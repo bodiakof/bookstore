@@ -1,4 +1,6 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
+from typing import Optional
+
 from app.enums.book_format import BookFormat
 from app.enums.category import Category
 from app.enums.genre import Genre
@@ -14,9 +16,9 @@ class BookBase(BaseModel):
     category: Category
     genre: Genre
 
-    @validator('genre')
-    def check_genre_category_match(cls, genre_value, values):
-        category_value = values.get('category')
+    @field_validator('genre')
+    def check_genre_category_match(cls, genre_value, info):
+        category_value = info.data.get('category')
 
         if category_value and GENRE_TO_CATEGORY.get(genre_value) != category_value:
             raise ValueError(
@@ -27,10 +29,23 @@ class BookBase(BaseModel):
 
 
 class BookCreate(BookBase):
+    '''Schema for creating a book.'''
     pass
 
 
+class BookUpdate(BaseModel):
+    '''Schema for updating a book (partial or full).'''
+    title: Optional[str] = None
+    author: Optional[str] = None
+    price: Optional[float] = None
+    stock: Optional[int] = None
+    format: Optional[BookFormat] = None
+    category: Optional[Category] = None
+    genre: Optional[Genre] = None
+
+
 class Book(BookBase):
+    '''Schema for reading a book from DB.'''
     id: int
 
     class Config:
