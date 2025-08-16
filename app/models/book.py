@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, Enum as SqlEnum
+
 from app.db.database import Base
 from app.enums.book_format import BookFormat
 from app.enums.category import Category
@@ -13,9 +14,10 @@ class Book(Base):
     author = Column(String, nullable=False)
     price = Column(Float, nullable=False)
     stock = Column(Integer, default=0)
+    isbn = Column(String, unique=True, index=True, nullable=False)
 
     format = Column(
-        SqlEnum(BookFormat, name='book_format_enum'), 
+        SqlEnum(BookFormat, name='book_format_enum'),
         nullable=False, 
         default=BookFormat.PAPERBACK
         )

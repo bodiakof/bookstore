@@ -1,5 +1,4 @@
 from pydantic import BaseModel, field_validator
-from typing import Optional
 
 from app.enums.book_format import BookFormat
 from app.enums.category import Category
@@ -30,23 +29,25 @@ class BookBase(BaseModel):
 
 class BookCreate(BookBase):
     '''Schema for creating a book.'''
-    pass
+    isbn: str | None = None
 
 
 class BookUpdate(BaseModel):
     '''Schema for updating a book (partial or full).'''
-    title: Optional[str] = None
-    author: Optional[str] = None
-    price: Optional[float] = None
-    stock: Optional[int] = None
-    format: Optional[BookFormat] = None
-    category: Optional[Category] = None
-    genre: Optional[Genre] = None
+    title: str | None = None
+    author: str | None = None
+    price: float | None = None
+    stock: int | None = None
+    format: BookFormat | None = None
+    category: Category | None = None
+    genre: Genre | None = None
+    isbn: str | None = None
 
 
 class Book(BookBase):
     '''Schema for reading a book from DB.'''
     id: int
+    isbn: str
 
     class Config:
         orm_mode = True
