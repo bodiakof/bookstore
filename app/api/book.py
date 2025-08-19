@@ -1,6 +1,6 @@
-from typing import Union
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+
 from app.db.database import get_db
 from app.schemas.book import BookCreate, BookUpdate, Book
 from app.crud import book as book_crud
@@ -19,9 +19,9 @@ def read_book(book_id: int, db: Session = Depends(get_db)):
     '''Get details for a single book by ID.'''
     return book_crud.get_book(db, book_id)
 
-@router.post('/', response_model=Union[Book, list[Book]], status_code=201)
+@router.post('/', response_model=Book | list[Book], status_code=201)
 def create_books(
-    books: Union[BookCreate, list[BookCreate]], 
+    books: BookCreate | list[BookCreate], 
     db: Session = Depends(get_db)
     ):
     '''

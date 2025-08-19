@@ -7,8 +7,8 @@ services:
     depends_on:
       - postgres
     volumes:
-      - ./app:/app/app      # mount your code so you don’t need to rebuild on every change
-      - ./logs:/var/log/fastapi   # logs folder shared with host
+      - ./app:/app/app
+      - ./logs:/var/log/fastapi
     env_file:
       - .env
 
