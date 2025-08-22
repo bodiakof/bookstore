@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -8,10 +10,12 @@ from app.enums.book_format import BookFormat
 
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 @router.get('/', response_model=list[Book])
 def read_books(db: Session = Depends(get_db)):
     '''Get a list of all books.'''
+    logger.info('GET /books endpoint called')
     return book_crud.get_books(db)
 
 @router.get('/{book_id}', response_model=Book)

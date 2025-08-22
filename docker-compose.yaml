@@ -8,9 +8,10 @@ services:
       - postgres
     volumes:
       - ./app:/app/app
-      - ./logs:/var/log/fastapi
+      - ./logs:/app/logs
     env_file:
       - .env
+    user: "1000:1000"
 
   postgres:
     image: postgres:15
